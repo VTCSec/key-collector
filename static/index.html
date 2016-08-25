@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>VTCSec / Rackspace Key Signing Party Sign-up</title>
+	<style>
+h1 {
+	font-size: 1.75em;
+}
+form {
+	margin: 2em;
+}
+.recommended {
+	font-style: italic;
+	color: #99f;
+}
+	</style>
+</head>
+<body>
+
+<h1>VTCSec / Rackspace Key Signing Party Sign-up</h1>
+
+<p>Hello!</p>
+
+<p>To participate in the key-signing party, everybody needs to have a trusted copy of your public key fingerprint. In past years we have asked people to just submit their information to a non-validating form, but we found that people transcribed things by hand instead of copy/pasting and did we ended up with typos, causing undesirable and avoidable verification delays.</p>
+
+<p>This year, we have implemented a pgp-aware key collection system which does at least some minimal validation. This is an improvement over the free-form text input of previous years where humans mis-transcribed fingerprints leading to entirely avoidable delays during the key signing party.</p>
+
+<p>When you submit your key fingerprint below, we attempt to fetch your key from <a href="https://keyserver.cns.vt.edu/">keyserver.cns.vt.edu</a>, and then ask you to confirm that what we fetched is indeed what you intend to have signed (in particular that all UIDs you expect to be present are indeed present, and that key expirations are what you expect them to be). This serves as an additional verification mechanism to help ensure you did not forget to upload your keys to the keyservers after doing key maintenance (for example adding another email address or extending the validity of an expiring key).</p>
+
+<p>If you prefer, you may also submit an ascii-armored export of your public key directly as you wish it to be used instead of relying on the key server.</p>
+
+<form action="/by-fingerprint" method="GET">
+	Sign-up by fingerprint: <span class="recommended">(recommended!)</span>
+	<div>
+		<input type="text" name="fp" />
+		<input type="submit" value="Sign up!" />
+	</div>
+	(<tt>$ gpg --fingerprint <i>&lt;your-key&gt;</i></tt>)
+</form>
+
+<form action="/by-export" method="POST">
+	or submit an ascii-armored public key directly:
+	<div>
+		<textarea name="pubkey"></textarea>
+		<input type="submit" value="Sign up!" />
+	</div>
+	(<tt>$ gpg -a --export <i>&lt;your-key&gt;</i></tt>)
+</form>
+
+<p><span style="color: red;">NOTE:</span> Beware of using short key IDs, as <a href="https://evil32.com/">they are trivially brute-forceable!</a> Always verify full fingerprints when signing keys, and if using GnuPG, we recommend you <a href="https://security.stackexchange.com/questions/84280">configure it to display long key IDs by default</a>.
+
+</body>
+</html>
