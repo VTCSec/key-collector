@@ -23,7 +23,7 @@ keyblob=$(gpg -a --no-emit-version --export-options export-minimal --export)
 rm -rf "$GNUPGHOME"
 
 # Save it (ghetto way for now).
-echo "$keyblob" >> keys/"$fp".pgp
+echo "$keyblob" > keys/"$fp".pgp
 
 # Generate some nice HTML output.
 cat <<EOF
