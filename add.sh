@@ -5,6 +5,8 @@ set -e
 
 . ./config.sh
 
+[ -n "$key_dir" ] || err 'Config file missing key_dir.'
+
 # Convenient bailing.
 err() {
 	echo "$*" >&2

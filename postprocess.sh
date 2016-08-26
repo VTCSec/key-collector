@@ -2,7 +2,12 @@
 
 set -e
 
-. config.sh
+. ./config.sh
+
+[ -n "$html_form" ] || err "Config file missing html_form."
+[ -n "$pdf_form" ] || err "Config file missing pdf_form."
+[ -n "$key_dir" ] || err "Config file missing key_dir."
+[ -n "$party_ring" ] || err "Config file missing party_ring."
 
 make_pdf() {
 	# Drops some table lines when rendering tables with border-collapse.
