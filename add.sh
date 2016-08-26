@@ -3,6 +3,8 @@
 # Exit on errors.
 set -e
 
+. config.sh
+
 # Convenient bailing.
 err() {
 	echo "$*" >&2
@@ -23,9 +25,12 @@ keyblob=$(gpg -a --no-emit-version --export-options export-minimal --export)
 rm -rf "$GNUPGHOME"
 
 # Save it (ghetto way for now).
-echo "$keyblob" > keys/"$fp".pgp
+echo "$keyblob" > "${keydir}/${fp}".asc
 
-# Generate some nice HTML output.
+# Regen the fingerprint HTML & PDF, and party-keyring.
+./postprocess.sh
+
+# Tell the user all is good!
 cat <<EOF
 <!DOCTYPE html>
 <html>

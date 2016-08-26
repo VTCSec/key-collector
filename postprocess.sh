@@ -2,10 +2,7 @@
 
 set -e
 
-html_form=static/fingerprints.html
-pdf_form=static/fingerprints.pdf
-key_dir=static/keys
-party_ring=static/keyring.asc
+. config.sh
 
 make_pdf() {
 	# Drops some table lines when rendering tables with border-collapse.
