@@ -23,11 +23,11 @@ form {
 
 <p>To participate in the key-signing party, everybody needs to have a trusted copy of your public key fingerprint. In past years we have asked people to just submit their information to a non-validating form, but we found that people transcribed things by hand instead of copy/pasting and did we ended up with typos, causing undesirable and avoidable verification delays.</p>
 
-<p>This year, we have implemented a pgp-aware key collection system which does at least some minimal validation. This is an improvement over the free-form text input of previous years where humans mis-transcribed fingerprints leading to entirely avoidable delays during the key signing party.</p>
+<p>This year, we have implemented a PGP-aware key collection system which does at least some minimal validation. This is an improvement over the free-form text input of previous years where humans mis-transcribed fingerprints leading to entirely avoidable delays during the key signing party.</p>
 
 <p>When you submit your key fingerprint below, we attempt to fetch your key from <a href="https://keyserver.cns.vt.edu/">keyserver.cns.vt.edu</a>, and then ask you to confirm that what we fetched is indeed what you intend to have signed (in particular that all UIDs you expect to be present are indeed present, and that key expirations are what you expect them to be). This serves as an additional verification mechanism to help ensure you did not forget to upload your keys to the keyservers after doing key maintenance (for example adding another email address or extending the validity of an expiring key).</p>
 
-<p>If you prefer, you may also submit an ascii-armored export of your public key directly as you wish it to be used instead of relying on the key server.</p>
+<p>If you prefer, you may also submit an ASCII-armored export of your public key directly as you wish it to be used instead of relying on the key server.</p>
 
 <form action="/by-fingerprint" method="GET">
 	Sign-up by fingerprint: <span class="recommended">(recommended!)</span>
@@ -39,7 +39,7 @@ form {
 </form>
 
 <form action="/by-export" method="POST">
-	or submit an ascii-armored public key directly:
+	or submit an ASCII-armored public key directly:
 	<div>
 		<textarea name="pubkey"></textarea>
 		<input type="submit" value="Sign up!" />
@@ -48,6 +48,12 @@ form {
 </form>
 
 <p><span style="color: red;">NOTE:</span> Beware of using short key IDs, as <a href="https://evil32.com/">they are trivially brute-forceable!</a> Always verify full fingerprints when signing keys, and if using GnuPG, we recommend you <a href="https://security.stackexchange.com/questions/84280">configure it to display long key IDs by default</a>.
+
+<p>When attending the event you will use a pen and a piece of paper with the fingerprints of everyones' keys. This form is automatically generated from the people who have signed up, and is available as <a href="/fingerprints.pdf">PDF</a> and <a href="/fingerprints.html">HTML</a>. As you verify fingerprints and IDs of other attendees, you will check off the appropriate boxes on your form to track that you have done so satisfactorily.</p>
+
+<p>Later, after the event, you should sign each key which you have sufficiently verified, and either encrypt those eignatures to the key and mail each one to each listed UID individually (to verify that the person actually controls the email addresses listed), or just upload your signatures to a key server. For convenience, a keyring of all keys signed up for the party can be bulk-downloaded from this server: <a href="/party-keys.pgp">party-keys.pgp</a>. DO NOT just blindly sign all the keys in that ring. You MUST verify the fingerprint of each one against your trusted paper copy.</p>
+
+<p>Invidual ASCII-armored blobs of each signed-up key can be found <a href="/keys/">here.</a> Note that these individual keys (as well as the party keyring) only contain the actual keys. You may fetch all the latest signatures for those keys from the key servers.</p>
 
 </body>
 </html>
