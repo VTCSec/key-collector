@@ -3,7 +3,7 @@
 # Exit on errors.
 set -e
 
-. config.sh
+. ./config.sh
 
 # Convenient bailing.
 err() {
@@ -25,7 +25,7 @@ keyblob=$(gpg -a --no-emit-version --export-options export-minimal --export)
 rm -rf "$GNUPGHOME"
 
 # Save it (ghetto way for now).
-echo "$keyblob" > "${keydir}/${fp}".asc
+echo "$keyblob" > "${key_dir}/${fp}".asc
 
 # Regen the fingerprint HTML & PDF, and party-keyring.
 ./postprocess.sh
