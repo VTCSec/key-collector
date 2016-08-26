@@ -25,7 +25,7 @@ setup() {
 }
 
 make_keyring() {
-	gpg -q -a --export
+	gpg -q --export
 }
 
 cleanup() {
