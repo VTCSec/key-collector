@@ -4,6 +4,12 @@ set -e
 
 . ./config.sh
 
+# Convenient bailing.
+err() {
+	echo "$*" >&2
+	exit 1
+}
+
 [ -n "$html_form" ] || err "Config file missing html_form."
 [ -n "$pdf_form" ] || err "Config file missing pdf_form."
 [ -n "$key_dir" ] || err "Config file missing key_dir."

@@ -3,18 +3,18 @@
 # Exit on errors.
 set -e
 
+# Convenient bailing.
+err() {
+	echo "$*" >&2
+	exit 1
+}
+
 # Escape HTML.
 escape() {
 	# Order of application of -e is not portable, so we must use separate
 	# seds to ensure & escaped before <> so we don't end up with &amp;lt;s
 	# on some systems.
 	echo "$1" | sed 's/&/\&amp;/g' | sed -e 's/</\&lt;/g' -e 's/>/\&gt;/g'
-}
-
-# Convenient bailing.
-err() {
-	echo "$*" >&2
-	exit 1
 }
 
 # Set up temporary keyrings for just this import.

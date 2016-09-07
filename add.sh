@@ -5,13 +5,13 @@ set -e
 
 . ./config.sh
 
-[ -n "$key_dir" ] || err 'Config file missing key_dir.'
-
 # Convenient bailing.
 err() {
 	echo "$*" >&2
 	exit 1
 }
+
+[ -n "$key_dir" ] || err 'Config file missing key_dir.'
 
 # Set up temporary keyrings for just this import.
 export GNUPGHOME=$(mktemp -d)
