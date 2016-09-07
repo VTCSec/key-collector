@@ -1,16 +1,17 @@
 #!/bin/sh
 
-# Replace with whatever keyserver you want to use.
-keyserver=keyserver.cns.vt.edu
-
 # Exit on errors.
 set -e
+
+. ./config.sh
 
 # Conveniently error out.
 err() {
 	echo "$*" >&2
 	exit 1
 }
+
+[ -n "$keyserver" ] || err "Config file missing keyserver."
 
 # Ensure we were passed a fingerprint.
 [ $# -eq 1 -a -n "$1" ] || err "No fingerprint provided. Please provide your full 20-byte fingerprint."
