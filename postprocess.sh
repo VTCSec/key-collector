@@ -148,7 +148,10 @@ EOF
 }
 
 body() {
-	gpg --fingerprint | awk '
+	gpg --fingerprint \
+	| grep -E '^ *Key fingerprint = ' | sed 's/^.*= *//' \
+	| tr -dc '0-9A-F\n' | sort | xargs -n1 gpg --fingerprint \
+	| awk '
 function escape(s) {
 	gsub("&", "\\&amp;", s);
 	gsub("<", "\\&lt;", s);
