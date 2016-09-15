@@ -114,12 +114,17 @@ th.extend div {
 
 @page {
 	size: Letter;
+	padding-top: 1in;
 
 	@bottom-right {
 		content: "Page " counter(page) " / " counter(pages);
 	}
 }
 @media print {
+	h1 {
+		margin-top: 0;
+		padding-top: 0;
+	}
 	body {
 		width: 150%;
 		transform: scale(.75) translate(-23%, -30%);
