@@ -148,10 +148,7 @@ EOF
 }
 
 body() {
-	gpg --fingerprint \
-	| grep -E '^ *Key fingerprint = ' | sed 's/^.*= *//' \
-	| tr -dc '0-9A-F\n' | sort | xargs -n1 gpg --fingerprint \
-	| awk '
+	gpg --fingerprint | gawk '
 function escape(s) {
 	gsub("&", "\\&amp;", s);
 	gsub("<", "\\&lt;", s);
@@ -163,6 +160,8 @@ BEGIN {
 	type = "";
 	fp="";
 	split("", uids);
+
+	split("", keys);
 }
 	
 /^pub / {
@@ -188,8 +187,24 @@ BEGIN {
 
 /^$/ {
 	# key finished
+	keys[fp]["type"] = type;
+	for (i in uids) {
+		keys[fp]["uids"][i] = uids[i];
+	}
+}
 
-	rowspan=(length(uids) > 1 ? " rowspan=\"" length(uids) "\"" : "")
+function primary_uid_strcmp(i1, v1, i2, v2) {
+	k1 = toupper(v1["uids"][0]) i1
+	k2 = toupper(v2["uids"][0]) i2
+	if (k1 > k2) return 1;
+	if (k2 < k1) return -1;
+	return 0;
+}
+
+END {
+PROCINFO["sorted_in"] = "primary_uid_strcmp";
+for (fp in keys) {
+	rowspan=(length(keys[fp]["uids"]) > 1 ? " rowspan=\"" length(keys[fp]["uids"]) "\"" : "")
 	td="\t<td"
 	ctd="</td>"
 
@@ -197,22 +212,23 @@ BEGIN {
 	gsub("  ", "<br />", fpcell)
 
 	print "<tr class=\"pub-row\">"
-	print td rowspan ">" escape(type) ctd;
+	print td rowspan ">" escape(keys[fp]["type"]) ctd;
 	print td rowspan ">" fpcell ctd;
-	print td " class=\"uid\">" escape(uids[0]) ctd;
+	print td " class=\"uid\">" escape(keys[fp]["uids"][0]) ctd;
 	print td rowspan cb ">" ctd;
 	print td rowspan cb ">" ctd;
 	print td cb ">" ctd;
 	print td cb ">" ctd;
 	print "</tr>"
 
-	for (i = 1; i < length(uids); i++) {
+	for (i = 1; i < length(keys[fp]["uids"]); i++) {
 		print "<tr class=\"uid-row\">";
-		print td " class=\"uid\">" escape(uids[i]) ctd;
+		print td " class=\"uid\">" escape(keys[fp]["uids"][i]) ctd;
 		print td cb ">" ctd;
 		print td cb ">" ctd;
 		print "</tr>";
 	}
+}
 }
 '
 }
