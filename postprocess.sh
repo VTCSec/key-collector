@@ -66,11 +66,15 @@ td {
 	border: 2px solid black;
 	padding: 3px;
 }
+td.fp {
+	width: 15em;
+}
 td.uid {
 	white-space: normal;
 }
 th.extend {
-	width: 1em;
+	width: 1.5em;
+	height: 1.5em;
 	position: relative;
 	margin-right: 0px;
 }
@@ -213,7 +217,7 @@ for (fp in keys) {
 
 	print "<tr class=\"pub-row\">"
 	print td rowspan ">" escape(keys[fp]["type"]) ctd;
-	print td rowspan ">" fpcell ctd;
+	print td rowspan " class=\"fp\">" fpcell ctd;
 	print td " class=\"uid\">" escape(keys[fp]["uids"][0]) ctd;
 	print td rowspan cb ">" ctd;
 	print td rowspan cb ">" ctd;
